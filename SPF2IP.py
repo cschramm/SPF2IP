@@ -88,9 +88,8 @@ class SPF2IP:
   def GetSPFArray(self, domain):
     results = dns_request_unicode(domain,'TXT')
     for rrset in results:
-      for txtrecord in rrset:
-        if re.match(r'v=spf1 ',txtrecord):
-          return sorted(list(set(txtrecord.lower().split())))
+      if re.match(r'v=spf1 ',rrset[0]):
+        return sorted(list(set(''.join(rrset).lower().split())))
     # Default return
     return []
 
